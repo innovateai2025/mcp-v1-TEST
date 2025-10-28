@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mcp-server:
+    build: .
+    container_name: la-cabrera-mcp
+    ports:
+      - "8080:8080"
+    environment:
+      # Configuración de N8N
+      - N8N_API_URL=${N8N_API_URL:-http://your-n8n:5678/api/v1}
+      - N8N_API_KEY=${N8N_API_KEY}
+      
+      # Configuración de Google Sheets
+      - GOOGLE_SHEETS_CREDENTIALS=/app/credentials.json
+      - GOOGLE_SHEETS_ID=${GOOGLE_SHEETS_ID}
+      
+      # Configuración de base de datos
+      - DATABASE_URL=${DATABASE_URL}
+      
+      # Configuración de email
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      
+      # Configuración de logging
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    
+    volumes:
+      # Montar credenciales de Google Sheets
+      - ./credentials.json:/app/credentials.json:ro
+      # Persistencia de datos (opcional)
+      - mcp-data:/app/data
+    
+    restart: unless-stopped
+    
+    networks:
+      - mcp-network
+
+volumes:
+  mcp-data:
+
+networks:
+  mcp-network:
+    driver: bridge
+
