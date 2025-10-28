@@ -15,18 +15,10 @@ class Settings(BaseModel):
     google_sheets_credentials: Optional[str] = None
     google_sheets_id: Optional[str] = None
     
-    # Configuración de N8N
-    n8n_api_url: Optional[str] = None
-    n8n_api_key: Optional[str] = None
-    
-    # Configuración de base de datos
+    # Configuración de base de datos (opcional)
     database_url: Optional[str] = None
     
-    # Configuración de email
-    smtp_host: Optional[str] = None
-    smtp_port: int = 587
-    smtp_user: Optional[str] = None
-    smtp_password: Optional[str] = None
+    # Email de administración para escalamientos (opcional)
     admin_email: Optional[str] = None
     
     # Configuración de logging
@@ -64,13 +56,7 @@ def load_settings() -> Settings:
         # Cargar desde variables de entorno
         google_sheets_credentials=os.getenv("GOOGLE_SHEETS_CREDENTIALS"),
         google_sheets_id=os.getenv("GOOGLE_SHEETS_ID"),
-        n8n_api_url=os.getenv("N8N_API_URL"),
-        n8n_api_key=os.getenv("N8N_API_KEY"),
         database_url=os.getenv("DATABASE_URL"),
-        smtp_host=os.getenv("SMTP_HOST"),
-        smtp_port=int(os.getenv("SMTP_PORT", "587")),
-        smtp_user=os.getenv("SMTP_USER"),
-        smtp_password=os.getenv("SMTP_PASSWORD"),
         admin_email=os.getenv("ADMIN_EMAIL"),
         log_level=os.getenv("LOG_LEVEL", "INFO")
     )

@@ -95,14 +95,13 @@ docker-compose up -d
 
 ### Variables de Entorno Requeridas
 
-- `N8N_API_URL`: URL de la API de N8N
 - `GOOGLE_SHEETS_CREDENTIALS`: Ruta a credenciales de Google Sheets
 - `GOOGLE_SHEETS_ID`: ID de la hoja de cálculo
 
 ### Variables Opcionales
 
-- `DATABASE_URL`: URL de base de datos
-- `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD`: Configuración de email
+- `DATABASE_URL`: URL de base de datos (si se usa persistencia en DB)
+- `ADMIN_EMAIL`: Email de administración para escalamientos
 - `LOG_LEVEL`: Nivel de logging (default: INFO)
 
 ## 🐳 Despliegue en EASYPANEL
@@ -122,11 +121,14 @@ docker-compose up -d
 
 ## 🔗 Integración con N8N
 
-El servidor MCP se integra con N8N para:
-- Recibir consultas de clientes
-- Procesar validaciones de menús
-- Gestionar reservas
-- Derivar consultas complejas
+El servidor MCP es **llamado desde N8N** para:
+- Procesar consultas de clientes
+- Ejecutar validaciones de menús (ejecutivo y manso)
+- Gestionar reservas con validación completa
+- Proporcionar información del restaurante actualizada
+- Derivar consultas complejas cuando sea necesario
+
+**Flujo:** N8N → MCP Server → Respuesta
 
 ## 📄 Licencia
 
